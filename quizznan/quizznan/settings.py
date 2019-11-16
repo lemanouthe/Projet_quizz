@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'quiz.apps.QuizConfig',
+    'graphene_django',
+    'quiz.apps.QuizConfig'
 ]
 
 MIDDLEWARE = [
@@ -103,6 +104,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+GRAPHENE = {
+    'SCHEMA': 'quizznan.schema.schema'
+}
 
 TINYMCE_DEFAULT_CONFIG = {
     'height': 360,
