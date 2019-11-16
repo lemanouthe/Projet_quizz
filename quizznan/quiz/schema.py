@@ -14,7 +14,7 @@ class SpecialisationNode(DjangoObjectType):
         filter_fields = {
             'nom': ['exact', 'icontains', 'istartswith'],
             'langage': ['exact', 'icontains', 'istartswith'],
-            'statut': ['exact'],
+            'statut': ['exact'], 
             
         }
         interfaces = (relay.Node, )
@@ -26,7 +26,7 @@ class UserNode(DjangoObjectType):
         fields = "__all__"
         filter_fields = {
             'username': ['exact', 'icontains', 'istartswith'],
-            'statut': ['exact'],
+            'statut': ['exact'], 
         }
         interfaces = (relay.Node, )
         
@@ -36,6 +36,7 @@ class ProfileNode(DjangoObjectType):
         # Allow for some more advanced filtering here
         fields = "__all__"
         filter_fields = {
+            'statut': ['exact'], 
         }
         interfaces = (relay.Node, )
         
@@ -50,7 +51,7 @@ class QuizzNode(DjangoObjectType):
             'niveau': ['exact'],
             'pourcentage': ['exact'],
             'duree': ['exact'],
-            'statut': ['exact'],
+            'statut': ['exact'], 
         }
         interfaces = (relay.Node, )
         
@@ -62,7 +63,7 @@ class QuestionNode(DjangoObjectType):
         filter_fields = {
             'niveau': ['exact'],
             'contenu': ['exact', 'icontains', 'istartswith'],
-            'statut': ['exact'],
+            'statut': ['exact'], 
         }
         interfaces = (relay.Node, )
 
@@ -74,8 +75,8 @@ class ReponseNode(DjangoObjectType):
         filter_fields = {
             'contenu': ['exact', 'icontains', 'istartswith'],
             'isrtue': ['exact', 'icontains', 'istartswith'],
-            'statut': ['exact'],
-        }
+            'statut': ['exact'], 
+        } 
         interfaces = (relay.Node, )
         
         
@@ -86,7 +87,7 @@ class QuizzUserNode(DjangoObjectType):
         fields = "__all__"
         filter_fields = {
             'note': ['exact'],
-            'statut': ['exact'],
+            'statut': ['exact'], 
         }
         interfaces = (relay.Node, )
         
@@ -97,7 +98,7 @@ class ReponseUserNode(DjangoObjectType):
         fields = "__all__"
         filter_fields = {
             'istrue': ['exact'],
-            'statut': ['exact'],
+            'statut': ['exact'], 
         }
         interfaces = (relay.Node, ) 
 
