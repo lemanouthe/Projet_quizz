@@ -199,6 +199,7 @@ class ReponseUser(Timemodels):
         verbose_name_plural = 'ReponseUsers'
     
     def save(self, *args, **kwargs):
+        super(ReponseUser, self).save(*args, **kwargs)
         self.istrue = self.liste_true == self.question.liste_true
         super(ReponseUser, self).save(*args, **kwargs)
         self.quizzuser.save()
