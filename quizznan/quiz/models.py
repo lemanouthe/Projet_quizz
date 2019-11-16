@@ -3,7 +3,6 @@ from django.db import models
 # Create your models here.
 
 # Projet_quizz
- 
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -16,7 +15,28 @@ class Timemodels(models.Model):
     statut = models.BooleanField(default=True)
     date_add =  models.DateTimeField(auto_now_add=True)
     date_update =  models.DateTimeField(auto_now=True)
-      
+    
+    @property
+    def get_specialisation_rang(self):
+        """Fonction pour récupérer le classement de l'utilisateur par spécialisation"""
+        pass
+    
+    @property
+    def get_general_rang(self):
+        """Fonction pour récupérer le classement général de l'utilisateur"""
+        pass
+    
+    @property
+    def get_specialisation_sexe_rang(self):
+        """Fonction pour récupérer le classement de l'utilisateur par spécialisation par sexe"""
+        pass
+    
+    @property
+    def get_general_sexe_rang(self):
+        """Fonction pour récupérer le classement de l'utilisateur par spécialisation"""
+        pass
+    
+    
     class Meta:
         abstract = True
 
@@ -27,6 +47,10 @@ class Specialisation(Timemodels):
     # TODO: Define fields here
     nom = models.CharField(max_length=50)
     langage = models.CharField(max_length=50)
+    
+    def classement(self):
+        """Fonction pour faire le classement par spécialisation"""
+        pass
 
     class Meta:
         """Meta definition for Specialisation."""
@@ -75,9 +99,12 @@ class Quizz(Timemodels):
     titre = models.CharField(max_length=50)
     niveau = models.PositiveIntegerField()
     pourcentage = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="pourcentage pour valider")
+    pourcentage = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(20)], verbose_name="Nombre de questions par quizz")
     date_debut = models.DateTimeField()
     date_fin = models.DateTimeField()
     duree = models.TimeField()
+    
+    
 
     @property
     def is_available(self):
@@ -150,6 +177,10 @@ class QuizzUser(Timemodels):
 
         verbose_name = 'QuizzUser'
         verbose_name_plural = 'QuizzUsers'
+        
+    def createquizz(self):
+        """Fonction pour générer les questions d'un quizz"""
+        pass
 
     def save(self, *args, **kwargs):
         nb = self.questions.all().count()
