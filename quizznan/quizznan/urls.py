@@ -21,6 +21,7 @@ from filebrowser.sites import site
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('quiz.urls')),
     path('tinymce/', include('tinymce.urls')),
     path('admin/filebrowser/', site.urls),
 ]
