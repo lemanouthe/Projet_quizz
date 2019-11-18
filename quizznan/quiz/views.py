@@ -11,13 +11,10 @@ from .models import *
 def connexion(request):
     return render(request, 'pages/login.html')
 
-<<<<<<< HEAD
 @login_required
 def home(request):
     return render(request, 'pages/index.html')
 
-@login_required
-=======
 def islogin(request,):
     
     postdata = json.loads(request.body.decode('utf-8'))
@@ -52,12 +49,7 @@ def islogin(request,):
     
     return JsonResponse(datas, safe=False)
 
-
-def home(request):
-    return render(request, 'pages/index.html')
-
-
->>>>>>> fc84c9cf0d2bb3c9d838abd2d1f626f81721ac15
+@login_required
 def profil(request):
     return render(request, 'pages/profil.html')
 
