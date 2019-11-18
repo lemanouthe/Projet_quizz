@@ -9,6 +9,7 @@
         <!-- stylesheet ***************************************** -->
         <link rel="stylesheet" href="/static/ressources/css/bootstrap.min.css">
         <link rel="stylesheet" href="/static/ressources/css/main.css">
+        <link href="https://vjs.zencdn.net/7.6.5/video-js.css" rel="stylesheet">
         <link rel="stylesheet" href="/static/ressources/css/slick.min.css">
         <link rel="stylesheet" type="text/css" media="screen" href="/static/ressources/css/datatable/datatable.bootstrap.css" />
 
@@ -36,10 +37,30 @@
         <script src="/static/ressources/js/jquery.min.js"></script>
             
         
+        <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+        <script src='https://vjs.zencdn.net/7.6.5/video.js'></script>
+        <style>
+
+            .my-card{
+                border-radius: 7px;
+                padding: 2rem;
+                box-shadow: 0 3px 20px rgba(0,0,0,0.16), 0 3px 15px rgba(0, 0, 0, 0);
+            }
+            .card h3{
+                text-align: center;
+                color: #17a2b8;
+            }
+            .lesson-title{
+                color: #6f42c1;
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+        </style>
+
     </head>
     <body>
 
-        <section class="main center-content">
+        <section class="main center-content u-pd-10 ">
             <div class="main-navbar">
                 <div id="user-circle" class="profil" style="background: url(/static/ressources/images/photo.png) center no-repeat; background-size: cover;">&nbsp;</div>
                 <div id="dropdown-user" class="profil-dropdown"  >
