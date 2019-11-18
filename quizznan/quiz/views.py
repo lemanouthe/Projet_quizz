@@ -11,7 +11,7 @@ from .models import *
 def connexion(request):
     return render(request, 'pages/login.html')
 
-@login_required
+@login_required(login_url='login')
 def home(request):
     return render(request, 'pages/index.html')
 
@@ -49,19 +49,19 @@ def islogin(request,):
     
     return JsonResponse(datas, safe=False)
 
-@login_required
+@login_required(login_url='login')
 def profil(request):
     return render(request, 'pages/profil.html')
 
-@login_required
+@login_required(login_url='login')
 def quizz(request):
     return render(request, 'pages/quizz.html')
 
-@login_required
+@login_required(login_url='login')
 def epreuve(request):
     return render(request, 'pages/epreuve.html')
 
-@login_required
+@login_required(login_url='login')
 def lesson(request):
     return render(request, 'pages/lesson.html')
 
