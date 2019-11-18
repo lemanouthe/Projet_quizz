@@ -185,3 +185,6 @@ class Query(graphene.ObjectType):
 
     ReponseUser = relay.Node.Field(ReponseUserNode)
     all_ReponseUsers = DjangoFilterConnectionField(ReponseUserNode)
+
+class RelayMutation(graphene.AbstractType):
+    relay_create_specialisation = RelayCreateSpecialisation.Field()
