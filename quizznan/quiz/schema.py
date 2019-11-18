@@ -1,10 +1,21 @@
 import graphene
-from graphene import relay, ObjectType
+from graphene import relay, ObjectType , Connection 
 from graphene_django import DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 
+
 from . import models
 from django.contrib.auth.models import User
+
+class ExtendConnection(Connection):
+    class Meta:
+        abstract = True
+    total_count = graphene.Int()
+    edge_count = graphene.Int()
+    def resolve_total_count(root,info,**kwargs):
+        return root.length
+    def resolve_edge_count(root,info,**kwargs):
+        return len(root.edges)
 
 class SpecialisationNode(DjangoObjectType):
     class Meta:
@@ -17,8 +28,49 @@ class SpecialisationNode(DjangoObjectType):
             'statut': ['exact'], 
             
         }
-        interfaces = (relay.Node, )
-        
+        interfaces = (relay.Node,)
+        connection_class = ExtendConnection
+
+class RelayCreateSpecialisation(graphene.relay.ClientIDMutation):
+    specialisation = graphene.Field(SpecialisationNode)
+    class Input:
+        nom = graphene.String()
+        langage = graphene.String()
+        status = graphene.Boolean()
+        pk = graphene.ID()
+
+    def mutate_and_get_payload(root,info,**kwargs):
+        pk = kwargs.get('id') or None
+        nom = kwargs.get('nom') or None
+        langage = kwargs.get('nom') or None
+        status = kwargs.get('status') or None
+        if nom is not None and status is not None and langage is not None and pk is None:
+            special = models.Specialisation(nom=nom, langage=langage, status=status)
+        elif nom is not None and status is not None and langage is not None and pk is not None :
+            special = models.Specialisation.objects.get(pk=pk)
+            special.nom = nom
+            special.langage = langage
+            special.status = status
+        elif nom is not None and  langage is not None and status is None and pk is not None:
+            special = models.Specialisation.objects.get(pk=pk)
+            special.nom = nom
+            special.langage = langage
+        elif nom is None and langage is not None and status is not None and pk is not None:
+            special = models.Specialisation.objects.get(pk=pk)
+            special.langage = langage
+            special.status = status
+        elif nom is not None and langage is None and status is not None and pk is not None:
+            special = models.Specialisation.objects.get(pk=pk)
+            special.nom = nom
+            special.status = status
+        elif nom is None and langage is None and status is not None and pk is not None:
+            special = models.Specialisation.objects.get(pk=pk)
+            special.status = status
+        else:
+            raise Exception('must be give parameters for Spécialisation mutations')
+        special.save()
+        return RelayCreateSpecialisation(specialisation = special)
+
 class UserNode(DjangoObjectType):
     class Meta:
         model = User
@@ -28,8 +80,10 @@ class UserNode(DjangoObjectType):
             'username': ['exact', 'icontains', 'istartswith'],
             'statut': ['exact'], 
         }
-        interfaces = (relay.Node, )
-        
+        interfaces = (relay.Node,)
+        connection_class = ExtendConnection
+
+
 class ProfileNode(DjangoObjectType):
     class Meta:
         model = models.Profile
@@ -54,7 +108,8 @@ class QuizzNode(DjangoObjectType):
             'statut': ['exact'], 
         }
         interfaces = (relay.Node, )
-        
+        connection_class = ExtendConnection
+       
 class QuestionNode(DjangoObjectType):
     class Meta:
         model = models.Question
@@ -65,7 +120,9 @@ class QuestionNode(DjangoObjectType):
             'contenu': ['exact', 'icontains', 'istartswith'],
             'statut': ['exact'], 
         }
-        interfaces = (relay.Node, )
+        interfaces = (relay.Node,)
+        connection_class = ExtendConnection
+
 
 class ReponseNode(DjangoObjectType):
     class Meta:
@@ -77,7 +134,9 @@ class ReponseNode(DjangoObjectType):
             'isrtue': ['exact', 'icontains', 'istartswith'],
             'statut': ['exact'], 
         } 
-        interfaces = (relay.Node, )
+        interfaces = (relay.Node,)
+        connection_class = ExtendConnection
+
         
         
 class QuizzUserNode(DjangoObjectType):
@@ -89,7 +148,9 @@ class QuizzUserNode(DjangoObjectType):
             'note': ['exact'],
             'statut': ['exact'], 
         }
-        interfaces = (relay.Node, )
+        interfaces = (relay.Node,)
+        connection_class = ExtendConnection
+
         
 class ReponseUserNode(DjangoObjectType):
     class Meta:
@@ -100,8 +161,8 @@ class ReponseUserNode(DjangoObjectType):
             'istrue': ['exact'],
             'statut': ['exact'], 
         }
-        interfaces = (relay.Node, ) 
-
+        interfaces = (relay.Node,)
+        connection_class = ExtendConnection
 
 class Query(graphene.ObjectType):
     Specialisation = relay.Node.Field(SpecialisationNode)
@@ -124,3 +185,6 @@ class Query(graphene.ObjectType):
 
     ReponseUser = relay.Node.Field(ReponseUserNode)
     all_ReponseUsers = DjangoFilterConnectionField(ReponseUserNode)
+
+class RelayMutation(graphene.AbstractType):
+    relay_create_specialisation = RelayCreateSpecialisation.Field()

@@ -6,5 +6,4 @@ django-tinymce4-lite==1.7.5
 graphene==2.1.8
 graphene-django==2.6.0
 Pillow==6.2.1
-pyenchant==2.0.0
 
