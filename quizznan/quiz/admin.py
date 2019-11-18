@@ -10,7 +10,6 @@ from . import models
 class SpecialisationAdmin(admin.ModelAdmin):
 
     list_display = (
-        'id',
         'statut',
         'date_add',
         'date_update',
@@ -21,18 +20,15 @@ class SpecialisationAdmin(admin.ModelAdmin):
         'statut',
         'date_add',
         'date_update',
-        'id',
-        'statut',
-        'date_add',
-        'date_update',
-        'nom',
-        'langage',
     )
+    date_hierarchy = ('date_add')
 
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'specialisation', 'statut', 'date_add', 'date_update', 'view_image')
-    list_filter = ('statut', 'date_add', 'date_update', 'user', 'specialisation')
+    list_filter = ('statut', 'date_add', 'date_update',)
+    date_hierarchy = ('date_add')
+
 
     def view_image(self,obj):
         return mark_safe('<img src="{img_url}" width="100px", heigth="100px"/>'.format(img_url=obj.image.url))
@@ -61,10 +57,11 @@ class QuizzAdmin(admin.ModelAdmin):
         'statut',
         'date_add',
         'date_update',
-        'specialisation',
         'date_debut',
         'date_fin',
     )
+    date_hierarchy = ('date_add')
+
 
     inlines = [QuestionInline]
 
@@ -79,7 +76,6 @@ class QuestionAdmin(admin.ModelAdmin):
         'date_add',
         'date_update',
         'quizz',
-        'contenu',
         'niveau',
     )
     list_filter = (
@@ -88,6 +84,8 @@ class QuestionAdmin(admin.ModelAdmin):
         'date_update',
         'quizz',
     )
+    date_hierarchy = ('date_add')
+
     inlines = [ReponseInline]
 
 
@@ -97,17 +95,16 @@ class ReponseAdmin(admin.ModelAdmin):
         'statut',
         'date_add',
         'date_update',
-        'question',
-        'contenu',
         'isrtue',
     )
     list_filter = (
         'statut',
         'date_add',
         'date_update',
-        'question',
         'isrtue',
     )
+    date_hierarchy = ('date_add')
+
 
 
 class QuizzUserAdmin(admin.ModelAdmin):
@@ -125,16 +122,10 @@ class QuizzUserAdmin(admin.ModelAdmin):
         'statut',
         'date_add',
         'date_update',
-        'quizz',
-        'user',
-        'id',
-        'statut',
-        'date_add',
-        'date_update',
-        'quizz',
-        'user',
         'note',
     )
+    date_hierarchy = ('date_add')
+
 
 
 class ReponseUserAdmin(admin.ModelAdmin):
@@ -144,7 +135,6 @@ class ReponseUserAdmin(admin.ModelAdmin):
         'statut',
         'date_add',
         'date_update',
-        'question',
         'quizzuser',
         'istrue',
     )
@@ -152,17 +142,10 @@ class ReponseUserAdmin(admin.ModelAdmin):
         'statut',
         'date_add',
         'date_update',
-        'question',
-        'quizzuser',
-        'istrue',
-        'id',
-        'statut',
-        'date_add',
-        'date_update',
-        'question',
-        'quizzuser',
         'istrue',
     )
+    date_hierarchy = ('date_add')
+
     raw_id_fields = ('reponses',)
     def save_related(self, request, form, formsets, change):
         super(ReponseUserAdmin, self).save_related(request, form, formsets, change)
