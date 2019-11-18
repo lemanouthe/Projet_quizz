@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json
 from . import models
+from .models import *
 
 # Create your views here.
 
@@ -48,11 +49,21 @@ def islogin(request,):
 def home(request):
     return render(request, 'pages/index.html')
 
+
 def profil(request):
     return render(request, 'pages/profil.html')
 
 def quizz(request):
-    return render(request, 'pages/quizz.html')
+
+    # qcm = Question.objects.filter(statut=True)
+    # paginator = Paginator(qcm, 1)
+    # page = request.GET.get('page')
+    # question = paginator.get_page(page)
+
+    # data = {
+    #     'qcm': question,
+    # }
+    return render(request, 'pages/quizz.html', data)
 
 def deconnexion(request):
     logout(request)

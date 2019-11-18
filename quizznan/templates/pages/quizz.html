@@ -29,18 +29,14 @@
                     </div>
                     
                     <div class="testimonial-carousel">
+                        {% for q in qcm %}
                         <div class="h5 font-weight-normal one-slide mx-auto">
                             <div class="testimonial  px-3 d-flex flex-direction-column justify-content-center flex-wrap ">
                                 <div>
-                                    <span class="badge badge-secondary badge-question">Question 1</span>
+                                    <span class="badge badge-secondary badge-question">{{ q.quizz.titre }}</span>
                                     <br><br>
                                     <p class="quiz-question">
-                                        They’ve been consistent throughout 
-                                        the years and grown together with us. 
-                                        Even as they’ve grown, they haven’t lost 
-                                        sight of what they do. Most of their key 
-                                        resources are still with them, which is also 
-                                        a testament to their organization."
+                                        {{ q.contenu|safe }}
                                     </p>
                                     <br><hr><br>
                                     <div class="new">
@@ -62,6 +58,7 @@
                                 </div>
                             </div>
                         </div>
+                        {% endfor %}
                         <!-- question 2 -->
                         <div class="h5 font-weight-normal one-slide mx-auto">
                             <div class="testimonial  px-3 d-flex flex-direction-column justify-content-center flex-wrap ">
@@ -96,7 +93,6 @@
                                 </div>
                             </div>
                         </div>
-                           
                     </div>
                 </div>
             </div>
