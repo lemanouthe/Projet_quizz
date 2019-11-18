@@ -32,7 +32,63 @@
 
         <!-- jquery ******************************************** -->
         <script src="/static/ressources/js/jquery.min.js"></script>
-
+        <style>
+            body {
+                background: url(http://karenmenezes.com/shapes-polygon/bg-cubes.png);
+                background-attachment: fixed;
+            }
+        
+            .lds-ring {
+                display: inline-block;
+                position: relative;
+                width: 64px;
+                height: 64px;
+            }
+        
+            .lds-ring div {
+                box-sizing: border-box;
+                display: block;
+                position: absolute;
+                width: 51px;
+                height: 51px;
+                margin: 6px;
+                border: 6px solid #dfc;
+                border-radius: 50%;
+                animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+                border-color: #dfc transparent transparent transparent;
+            }
+        
+            .lds-ring div:nth-child(1) {
+                animation-delay: -0.45s;
+            }
+        
+            .lds-ring div:nth-child(2) {
+                animation-delay: -0.3s;
+            }
+        
+            .lds-ring div:nth-child(3) {
+                animation-delay: -0.15s;
+            }
+        
+            @keyframes lds-ring {
+                0% {
+                    transform: rotate(0deg);
+                }
+        
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        
+            .login-box-body {
+                background: #fff;
+                padding: 20px;
+                border-top: 0;
+                color: #666;
+                box-shadow: 0 3px 20px rgba(0, 0, 0, 0.16), 0 3px 15px rgba(0, 0, 0, 0);
+                border-radius: 7px;
+            }
+        </style>
         
     </head>
     <body>
@@ -53,6 +109,67 @@
         <script src="/static/ressources/js/bootstrap.min.js"></script>
         <script src="/static/ressources/js/main.js"></script>
 
+        <!-- VueJS et Axios -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        
+        <script>
+            // Block Vue JS 
+            new Vue({
+                el: '#app',
+                data: {
+                    username: '',
+                    password: '',
+                    loader: false,
+                    isSuccess: false,
+                    error: false,
 
+                },
+                delimiters: ["${", "}"],
+                mounted() {
+
+                },
+                methods: {
+                    login: function () {
+                        axios.defaults.xsrfCookieName = 'csrftoken'
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+                        axios.post('http://127.0.0.1:8000/post', {
+                            username: '' + this.username,
+                            password: '' + this.password,
+                        }).then(response => {
+                            console.log(response)
+                            if (response.data.success) {
+                                this.isSuccess = true
+                                this.error = false
+                                this.message = response.data.message
+                                this.success = response.data.success
+                                window.location.replace("home");
+                            }
+                            else {
+                                this.error = true
+                                this.message = response.data.message
+                                this.success = response.data.success
+                                this.isSuccess = false
+                            }
+
+                            console.log("success variable" + this.isSuccess)
+                            // console.log("success variable"+this.error)
+                        })
+                            .catch((err) => {
+                                console.log(err);
+
+                            })
+                    },
+                }
+            });
+            // Block JS
+            // $(function () {
+            //     $('input').iCheck({
+            //         checkboxClass: 'icheckbox_square-blue',
+            //         radioClass: 'iradio_square-blue',
+            //         increaseArea: '20%' /* optional */
+            //     });
+            // });
+        </script>
     </body>
 </html>
