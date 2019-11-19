@@ -11,20 +11,13 @@ from tinymce import HTMLField
 from django.core.validators import MaxValueValidator, MinValueValidator
 import pytz
 
+
 class Timemodels(models.Model):
     statut = models.BooleanField(default=True)
     date_add =  models.DateTimeField(auto_now_add=True)
     date_update =  models.DateTimeField(auto_now=True)
     
-    @property
-    def get_specialisation_rang(self):
-        """Fonction pour récupérer le classement de l'utilisateur par spécialisation"""
-        pass
     
-    @property
-    def get_general_rang(self):
-        """Fonction pour récupérer le classement général de l'utilisateur"""
-        pass
     
     @property
     def get_specialisation_sexe_rang(self):
@@ -42,12 +35,14 @@ class Timemodels(models.Model):
 
 # Create your models here.
 class Specialisation(Timemodels):
+    
     """Model definition for Specialisation."""
 
     # TODO: Define fields here
     nom = models.CharField(max_length=50)
     langage = models.CharField(max_length=50)
     
+    @property
     def classement(self):
         """Fonction pour faire le classement par spécialisation"""
         pass
@@ -65,12 +60,32 @@ class Specialisation(Timemodels):
 
 class Profile(Timemodels):
     """Model definition for UserProfile."""
+    
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     image = models.ImageField(upload_to="profile", default="omar-sy-by-rachel.jpg")
     specialisation = models.ForeignKey('Specialisation', related_name='users', on_delete=models.CASCADE, blank=True, null=True)
-
-
+    
+    
+    @property 
+    def get_moyenne_general(self):
+        """ Fonction qui recupère la moyenne de l'utilisateur """
+        notes = sum([i.note for i in self.user.quizzs.all()])
+        nb = self.specialisation.quizzs.filter(statut = True).count()
+        return notes/nb
+        
+    
+    @property
+    def get_specialisation_rang(self):
+        """Fonction pour récupérer le classement de l'utilisateur par spécialisation"""
+        pass
+    
+    @property
+    def get_general_rang(self):
+        """Fonction pour récupérer le classement général de l'utilisateur"""
+        pass
+    
+    
     class Meta:
         """Meta definition for UserProfile."""
 
