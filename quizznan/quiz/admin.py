@@ -49,6 +49,7 @@ class QuizzAdmin(admin.ModelAdmin):
         'titre',
         'niveau',
         'pourcentage',
+        'nbq',
         'date_debut',
         'date_fin',
         'duree',
