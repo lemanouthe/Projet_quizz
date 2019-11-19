@@ -104,6 +104,7 @@ class QuizzNode(DjangoObjectType):
             'titre': ['exact', 'icontains', 'istartswith'],
             'niveau': ['exact'],
             'pourcentage': ['exact'],
+            'nbq': ['exact'],
             'duree': ['exact'],
             'statut': ['exact'], 
         }

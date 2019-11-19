@@ -114,7 +114,7 @@ class Quizz(Timemodels):
     titre = models.CharField(max_length=50)
     niveau = models.PositiveIntegerField()
     pourcentage = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name="pourcentage pour valider")
-    pourcentage = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(20)], verbose_name="Nombre de questions par quizz")
+    nbq = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(20)], verbose_name="Nombre de questions par quizz", null=True)
     date_debut = models.DateTimeField()
     date_fin = models.DateTimeField()
     duree = models.TimeField()

@@ -29,6 +29,7 @@
                         </div>
                         
                         <div class="testimonial-carousel">
+                            <!-- question 1 -->
                             <div class="h5 font-weight-normal one-slide mx-auto">
                                 <div class="testimonial  px-3 d-flex flex-direction-column justify-content-center flex-wrap ">
                                     <div>
@@ -110,13 +111,13 @@
                         <a href="#"class="qestion-number">
                             <div>01</div>
                         </a>
-                        <a href="#"class="qestion-number answered">
+                        <a href="#"class="qestion-number question-active">
                             <div>02</div>
                         </a>
                         <a href="#"class="qestion-number">
                             <div>03</div>
                         </a>
-                        <a href="#"class="qestion-number">
+                        <a href="#"class="qestion-number answered">
                             <div>04</div>
                         </a>
                         <a href="#"class="qestion-number">
@@ -178,7 +179,7 @@
                                         <h3 class="mt-4">Votre quiz a été soumis avec succès</h3>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="profil.html">
+                                        <a href="{% url 'profil' %}">
                                             <button class="btn1">consulter mes résultats</button>
                                         </a>
                                     </div>

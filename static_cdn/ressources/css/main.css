@@ -513,6 +513,10 @@ ul li a:hover{
     border: 1px solid var(--anv-teal);
 }
 
+.question-active{
+    border: 1px solid var(--anv-teal);
+}
+
 .timer-quiz,
 .note{
     min-height: 7rem;
